@@ -1,0 +1,133 @@
+/* style.css
+   ----------
+   All visual styling for the app in one place. Loaded and injected by
+   common.py's apply_page_style(). Google Fonts are linked separately
+   (see common.py) rather than @import'd here, since @import inside a
+   dynamically-injected <style> tag is unreliable in several browsers —
+   a <link> tag loads reliably every time.
+
+   IMPORTANT: we deliberately do NOT use a blanket [class*="css"] or
+   ".stApp span" selector for fonts. Streamlit's icon glyphs (arrows,
+   upload icon, expander carets, etc.) are rendered as text ligatures
+   inside <span> elements that also carry emotion-generated "css-xxxx"
+   classes — a blanket span/class rule silently breaks them, which is
+   what caused the literal words ("keyboard_double_arrow_left", "upload")
+   to show up instead of icons. Font rules below are scoped to specific,
+   known text-bearing elements instead of every span/class on the page.
+*/
+
+html, body {
+    font-family: 'Manrope', sans-serif;
+}
+
+/* Body text: markdown, captions, labels, inputs — explicit elements only */
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMarkdownContainer"] span,
+[data-testid="stCaptionContainer"],
+[data-testid="stCaptionContainer"] p,
+.stTextInput label,
+.stTextInput input,
+.stSelectbox label,
+.stMultiSelect label,
+.stButton > button,
+.stDownloadButton > button {
+    font-family: 'Manrope', sans-serif !important;
+}
+
+h1, h2, h3,
+[data-testid="stHeading"] h1,
+[data-testid="stHeading"] h2,
+[data-testid="stHeading"] h3 {
+    font-family: 'Lora', serif !important;
+    font-weight: 600 !important;
+    color: #12233F !important;
+}
+
+/* Icon safety net — several overlapping selectors so this doesn't rely
+   on guessing one exact Streamlit internal attribute name. Placed last
+   and kept high-specificity so it wins any conflict with the rules above. */
+[data-testid="stIconMaterial"],
+[data-testid*="Icon"],
+span[translate="no"],
+[class*="material-symbols"],
+[class*="material-icons"] {
+    font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', 'Material Icons' !important;
+}
+
+/* Main app background */
+.stApp {
+    background-color: #FAFBFC;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #0F2340;
+}
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] li,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 {
+    color: #E7ECF3 !important;
+}
+section[data-testid="stSidebar"] a {
+    color: #9FC4FF !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab"] {
+    font-weight: 600;
+    color: #4A5568;
+}
+.stTabs [aria-selected="true"] {
+    color: #12233F !important;
+    border-bottom-color: #B08D28 !important;
+}
+
+/* Citation / source cards */
+.source-card {
+    background-color: #FFFFFF;
+    border-left: 4px solid #B08D28;
+    border-radius: 4px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.source-tag {
+    font-weight: 700;
+    color: #12233F;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+}
+.source-text {
+    font-family: 'Manrope', sans-serif !important;
+    color: #3A4453;
+    font-size: 0.9rem;
+    margin-top: 0.35rem;
+    line-height: 1.5;
+}
+
+/* Answer box */
+.answer-box {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 1.4rem 1.6rem;
+    line-height: 1.65;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+/* Pipeline step indicator */
+.step-pill {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 0.4rem;
+}
+.step-done { background-color: #DCF3E6; color: #1B7A43; }
+.step-active { background-color: #FFF1CF; color: #8A6400; }
+.step-pending { background-color: #EDF0F4; color: #8894A3; }
